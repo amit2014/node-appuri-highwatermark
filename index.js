@@ -3,12 +3,12 @@
 const AWS = require('aws-sdk'),
       s3 = new AWS.S3()
 
-module.exports.putHighwatermark = (bucket, key, highwatermark) => s3
+module.exports.put = (bucket, key, highwatermark) => s3
   .putObject({ Bucket: bucket, Key: key, Body: highwatermark })
   .promise()
   .catch(() => console.error('WARNING: Failed to update high water mark for %s', highwatermark))
 
-module.exports.getHighwatermark = (bucket, key, options) => {
+module.exports.get = (bucket, key, options) => {
   options = options || {}
 
   let promise
