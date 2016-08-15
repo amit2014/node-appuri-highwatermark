@@ -4,7 +4,7 @@ const AWS = require('aws-sdk'),
       s3 = new AWS.S3()
 
 module.exports.put = (bucket, key, highwatermark) => s3
-  .putObject({ Bucket: bucket, Key: key, Body: highwatermark })
+  .putObject({ Bucket: bucket, Key: key, Body: JSON.stringify(highwatermark) })
   .promise()
   .catch(() => console.error('WARNING: Failed to update high water mark for %s', highwatermark))
 
@@ -18,7 +18,7 @@ module.exports.get = (bucket, key, options) => {
     promise = s3
       .getObject({ Bucket: bucket, Key: key })
       .promise()
-      .then(s3Object => s3Object.Body.toString())
+      .then(s3Object => JSON.parse(s3Object.Body.toString()))
       .catch(err => {
         if(err.statusCode === 404 && options.default) { return options.default }
         throw err
