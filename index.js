@@ -6,7 +6,7 @@ const AWS = require('aws-sdk'),
 module.exports.put = (bucket, key, highwatermark) => s3
   .putObject({ Bucket: bucket, Key: key, Body: JSON.stringify(highwatermark) })
   .promise()
-  .catch(() => console.error('WARNING: Failed to update high water mark for %j', highwatermark))
+  .catch((error) => console.error('WARNING: Failed to update high water mark for %j: %j', highwatermark, error))
 
 module.exports.get = (bucket, key, options) => {
   options = options || {}
