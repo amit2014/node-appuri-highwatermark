@@ -34,7 +34,7 @@ describe('highwatermark', () => {
 
           called++
           params.should.deep.equal({ Bucket: 'bucket', Key: 'key' })
-          return { promise: () => Promise.resolve({ Body: new Buffer('s3_highwatermark') }) }
+          return { promise: () => Promise.resolve({ Body: new Buffer('"s3_highwatermark"') }) }
         }}}})
 
       const highwatermark = yield mockedAppuriHighwatermark.get('bucket', 'key')
@@ -71,7 +71,7 @@ describe('highwatermark', () => {
         putObject(params) {
 
           called++
-          params.should.deep.equal({ Bucket: 'bucket', Key: 'key', Body: 'new_highwatermark' })
+          params.should.deep.equal({ Bucket: 'bucket', Key: 'key', Body: '"new_highwatermark"' })
           return { promise: () => Promise.resolve() }
         }}}})
 
@@ -86,7 +86,7 @@ describe('highwatermark', () => {
         putObject(params) {
 
           called++
-          params.should.deep.equal({ Bucket: 'bucket', Key: 'key', Body: 'new_highwatermark' })
+          params.should.deep.equal({ Bucket: 'bucket', Key: 'key', Body: '"new_highwatermark"' })
           return { promise: () => Promise.reject({ statusCode: 400 }) }
         }}}})
 
