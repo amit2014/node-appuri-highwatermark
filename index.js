@@ -32,3 +32,8 @@ module.exports.get = (bucket, key, options) => {
     return highwatermark
   })
 }
+
+module.exports.delete = (bucket, key) => s3
+  .deleteObject({ Bucket: bucket, Key: key})
+  .promise()
+  .catch((error) => console.error('WARNING: Failed to delete high water mark'))
