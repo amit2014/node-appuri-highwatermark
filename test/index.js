@@ -94,4 +94,20 @@ describe('highwatermark', () => {
       called.should.equal(1)
     })
   })
+
+  describe('delete', () => {
+    it('should delete an object from s3', function*() {
+      let called = 0
+      const mockedAppuriHighwatermark = proxyquire('../index', { 'aws-sdk': { S3: class {
+        deleteObject(params) {
+
+          called++
+          params.should.deep.equal({ Bucket: 'bucket', Key: 'key' })
+          return { promise: () => Promise.resolve() }
+        }}}})
+
+      yield mockedAppuriHighwatermark.delete('bucket', 'key')
+      called.should.equal(1)
+    })
+  })
 })
