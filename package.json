@@ -1,6 +1,6 @@
 {
   "name": "appuri-highwatermark",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "S3 based high water mark storage for Appuri Event Loaders",
   "main": "index.js",
   "scripts": {
