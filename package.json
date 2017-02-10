@@ -1,7 +1,7 @@
 {
   "name": "appuri-highwatermark",
-  "version": "0.2.0",
-  "description": "S3 based high water mark storage for Apuuri Event Loaders",
+  "version": "0.2.1",
+  "description": "S3 based high water mark storage for Appuri Event Loaders",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
@@ -19,7 +19,7 @@
     "url": "https://github.com/appuri/node-appuri-highwatermark/issues"
   },
   "engines": {
-    "node": ">=0.12"
+    "node": ">= 4"
   },
   "homepage": "https://github.com/appuri/node-appuri-highwatermark#readme",
   "dependencies": {

@@ -27,6 +27,16 @@ describe('highwatermark', () => {
       called.should.equal(1)
     })
 
+    it('should defaults to be falsy', function*() {
+      const mockedAppuriHighwatermark = proxyquire('../index', { 'aws-sdk': { S3: class {
+        getObject() {
+          return { promise: () => Promise.reject({ statusCode: 404 }) }
+        }}}})
+
+      const highwatermark = yield mockedAppuriHighwatermark.get('bucket', 'key', { default: 0 })
+      highwatermark.should.equal(0)
+    })
+
     it('should return the value from s3', function*() {
       let called = 0
       const mockedAppuriHighwatermark = proxyquire('../index', { 'aws-sdk': { S3: class {

@@ -20,14 +20,20 @@ module.exports.get = (bucket, key, options) => {
       .promise()
       .then(s3Object => JSON.parse(s3Object.Body.toString()))
       .catch(err => {
-        if(err.statusCode === 404 && options.default) { return options.default }
+        if (err.statusCode === 404 && 'default' in options) {
+          return options.default
+        }
         throw err
       })
   }
 
   return promise.then(highwatermark => {
-    if(options.map) { highwatermark = options.map(highwatermark) }
-    if(options.isValid && !options.isValid(highwatermark)) { throw new Error('Invalid high water mark') }
+    if (options.map) {
+      highwatermark = options.map(highwatermark)
+    }
+    if (options.isValid && !options.isValid(highwatermark)) {
+      throw new Error('Invalid high water mark')
+    }
 
     return highwatermark
   })
@@ -36,4 +42,4 @@ module.exports.get = (bucket, key, options) => {
 module.exports.delete = (bucket, key) => s3
   .deleteObject({ Bucket: bucket, Key: key})
   .promise()
-  .catch((error) => console.error('WARNING: Failed to delete high water mark'))
+  .catch((error) => console.error(`WARNING: Failed to delete high water mark: ${error.message || error}`))
